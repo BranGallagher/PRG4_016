@@ -1,0 +1,167 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="vegeta.ico" type="image/x-icon">
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Website</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="Latihan1.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Latihan1-2.html">Saya</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="Latihan1-3.html">Isi Kuisoner</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h1>Hubungi Kami</h1>
+        <p>Silakan isi formulir di bawah ini:</p>
+        <form>
+            <div class="form-group">
+                <label for="name">Nama:</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Masukkan nama" max="50">
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Masukkan email">
+            </div>
+            <div class="form-group">
+                <label for="message">Pesan:</label>
+                <textarea class="form-control" id="message" name="message" rows="4" placeholder="Masukkan pesan Anda"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Jenis Kelamin:</label><br>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="gender" id="male" value="Laki-laki">
+                    <label class="form-check-label" for="male">Laki-laki</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="gender" id="female" value="Perempuan">
+                    <label class="form-check-label" for="female">Perempuan</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Hobi:</label><br>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="hobby[]" id="reading" value="Membaca">
+                    <label class="form-check-label" for="reading">Membaca</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="hobby[]" id="sports" value="Olahraga">
+                    <label class="form-check-label" for="sports">Olahraga</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="hobby[]" id="music" value="Musik">
+                    <label class="form-check-label" for="music">Musik</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="country">Negara:</label>
+                <select class="form-control" id="country" name="country">
+                    <option value="indonesia">Indonesia</option>
+                    <option value="malaysia">Malaysia</option>
+                    <option value="singapura">Singapura</option>
+                    <option value="thailand">Thailand</option>
+                </select>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="Display()">Kirim</button>
+        </form>
+
+        
+        <div class="mt-4">
+            <h2>Hasil Pengisian Formulir:</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Nama</th>
+                        <th>Email</th>
+                        <th>Jenis Kelamin</th>
+                        <th>Hobi</th>
+                        <th>Negara</th>
+                    </tr>
+                </thead>
+                <tbody id="resultTable">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function Display() {
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var pesan = document.getElementById("message").value;
+            var gender = document.querySelector('input[name="gender"]:checked');
+            var hobi = [];
+            var chek = document.querySelectorAll('input[name="hobby[]"]:checked');
+            for (var i = 0; i < chek.length; i++) {
+                hobi.push(chek[i].value);
+            }
+            var country = document.getElementById("country").value;
+    
+            // Validasi email
+            if (!email.endsWith("@gmail.com")) {
+                alert("Email harus menggunakan alamat @gmail.com");
+                return;
+            }
+    
+            if(!gender){
+                alert("Wajib diisi!");
+            }
+            
+            // Validasi lainnya
+            if (!name || !pesan || !gender || hobi.length === 0 || !country) {
+                alert("Harap isi semua field!");
+                return;
+            }
+
+
+    
+            // Menambahkan data hasil formulir ke dalam tabel
+            var resultTable = document.getElementById("resultTable");
+            var newRow = resultTable.insertRow();
+            var cell1 = newRow.insertCell(0);
+            var cell2 = newRow.insertCell(1);
+            var cell3 = newRow.insertCell(2);
+            var cell4 = newRow.insertCell(3);
+            var cell5 = newRow.insertCell(4);
+    
+            cell1.innerHTML = name;
+            cell2.innerHTML = email;
+            cell3.innerHTML = gender.value;
+            cell4.innerHTML = hobi.join(", ");
+            cell5.innerHTML = country;
+    
+            document.getElementById("name").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("message").value = "";
+            gender.checked = false;
+            for (var i = 0; i < chek.length; i++) {
+                chek[i].checked = false;
+            }
+            document.getElementById("country").value = "";
+        }
+    </script>
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
